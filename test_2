@@ -1,0 +1,22 @@
+
+from time import time
+from selenium.webdriver.common.by import By
+from selenium import webdriver;
+from selenium.webdriver.common.keys import Keys
+import time
+
+#Uso KEY y TAB
+
+driver = webdriver.Chrome(executable_path="C:\drivers_selenium\chromedriver_win32\chromedriver.exe")
+driver.get("https://demoqa.com/text-box")
+driver.maximize_window()
+time.sleep(2)
+
+nom = driver.find_element(By.ID,"userName")
+nom.send_keys("Rodrigo")
+nom.send_keys (Keys.TAB + "emial@gmail.com" + Keys.TAB + "Direccion 1" + Keys.TAB + "Direccion 2" + Keys.TAB + Keys.ENTER )
+
+driver.execute_script("window.scrollTo(0,300)")
+
+time.sleep(4)
+driver.close()

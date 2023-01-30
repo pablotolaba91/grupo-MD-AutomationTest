@@ -1,0 +1,70 @@
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.by import By
+from selenium import webdriver;
+from selenium.webdriver.common.keys import Keys;
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+
+#Formulario
+marca_form = "La marca"
+modelo_form = "El modelo"
+monto_f = 100000
+dni_cliente= 36138816
+
+#Caso de prueba, validar que se pueda generar una simulacion de forma exitosa con un cliente que ya existe.
+#Manteniendo la agencia del usuario registrado.
+
+driver = webdriver.Chrome(executable_path="C:\drivers_selenium\chromedriver_win32\chromedriver.exe")
+driver.get("http://localhost:8000/")
+driver.maximize_window()
+time.sleep(2)
+
+#Login
+user = driver.find_element(By.XPATH, "//*[@id='email']")
+user.send_keys("pablotolaba91@gmail.com")
+
+passwd = driver.find_element(By.XPATH, "//*[@id='password']")
+passwd.send_keys("12345678")
+btn1 = driver.find_element(By.XPATH, "//*[@id='gatsby-focus-wrapper']/main/div[2]/div/form/div[3]/button/span[1]").click()
+time.sleep(5)
+
+#Simulador
+driver.get("http://localhost:8000/simulador/")
+
+marca= driver.find_element(By.XPATH,"//*[@id='gatsby-focus-wrapper']/div/div/main/div[1]/div[1]/div/div/form/div[1]/div[1]/div/div/input")
+marca.send_keys(marca_form)
+
+modelo= driver.find_element(By.XPATH,"//*[@id='gatsby-focus-wrapper']/div/div/main/div[1]/div[1]/div/div/form/div[1]/div[2]/div/div/input")
+modelo.send_keys(modelo_form)
+
+anio_selecter = driver.find_element(By.XPATH, "//*[@id='mui-component-select-year']").click()
+anio = driver.find_element(By.XPATH, "//*[@id='menu-year']/div[3]/ul/li[4]").click()
+time.sleep(2)
+
+convenio_selecter= driver.find_element(By.XPATH,"//*[@id='demo-simple-select']")
+convenio_selecter.click()
+convenio = driver.find_element(By.XPATH, "//body/div[@id='menu-tnaConfigId']/div[3]/ul[1]/li[2]" ).click()
+convenio_selecter.send_keys(Keys.TAB)
+
+cuotas_selecter = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/main/div[1]/div[1]/div/div/form/div[1]/div[5]/div/div/div").click()
+cuotas = driver.find_element(By.XPATH, "/html/body/div[5]/div[3]/ul/li[1]").click()
+
+monto = driver.find_element(By.XPATH, "//*[@id='gatsby-focus-wrapper']/div/div/main/div[1]/div[1]/div/div/form/div[1]/div[6]/div/div/input").send_keys(monto_f)
+
+simular_btn= driver.find_element(By.XPATH, "//*[@id='gatsby-focus-wrapper']/div/div/main/div[1]/div[1]/div/div/form/div[2]/button").click()
+generar_btn = driver.find_element(By.XPATH, "//*[@id='gatsby-focus-wrapper']/div/div/main/div[1]/div[2]/button").click()
+
+#Modal cliente
+
+form_dni_cliente = driver.find_element(By.XPATH, "/html/body/div[7]/div[3]/div/div[2]/div[3]/div[1]/div/div/input")
+scroll = driver.execute_script("arguments[0].scrollIntoView();",form_dni_cliente)
+form_dni_cliente.send_keys(dni_cliente)
+buscar_btn = driver.find_element(By.XPATH,"//body/div[7]/div[3]/div[1]/div[2]/div[3]/div[2]/button[1]").click()
+
+ingresos = driver.find_element(By.XPATH, "//body/div[7]/div[3]/div[1]/div[2]/form[1]/div[4]/div[1]/div[4]/div[1]/div[1]/input[1]")
+scroll =  driver.execute_script("arguments[0].scrollIntoView();",ingresos)
+time.sleep(10)
+guardar_btn = driver.find_element(By.XPATH, "//body/div[7]/div[3]/div[1]/div[2]/form[1]/div[5]/div[1]/button[1]").click()
+time.sleep(10)
+driver.close()

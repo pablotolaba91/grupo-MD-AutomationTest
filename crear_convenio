@@ -1,0 +1,64 @@
+from pydoc import cli
+from threading import TIMEOUT_MAX
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.by import By
+from selenium import webdriver;
+from selenium.webdriver.common.keys import Keys;
+import time
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+#Valido que se pueda crear un convenio correctamente
+#Form
+nombreConvenio = "El convenio de Auto 3001"
+tasa="4"
+anioDesde = "2010"
+anioHasta = "2022"
+gastoAdministrativo = "1000"
+c12= True
+c24 = False
+c36 = True
+c48 = False
+c60 = True
+
+
+driver = webdriver.Chrome(executable_path="C:\drivers_selenium\chromedriver_win32\chromedriver.exe")
+driver.get("http://localhost:8000/")
+driver.maximize_window()
+time.sleep(2)
+
+user = driver.find_element(By.XPATH, "//*[@id='email']")
+user.send_keys("pablotolaba91@gmail.com")
+
+passwd = driver.find_element(By.XPATH, "//*[@id='password']")
+passwd.send_keys("12345678")
+btn1 = driver.find_element(By.XPATH, "//*[@id='gatsby-focus-wrapper']/main/div[2]/div/form/div[3]/button/span[1]").click()
+time.sleep(5)
+
+driver.get("http://localhost:8000/convenios")
+time.sleep(2)
+agregarbtn = driver.find_element(By.XPATH,"//*[@id='gatsby-focus-wrapper']/div/div/main/div[1]/div/div/div/div/div/div[1]/div[2]/button").click()
+
+nombreC = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[7]/div[3]/div/div[2]/form/div/div[1]/div/div/input")))
+nombreC.send_keys(nombreConvenio + Keys.TAB + tasa + Keys.TAB + anioDesde + Keys.TAB + anioHasta + Keys.TAB + gastoAdministrativo)
+
+entidad = driver.find_element(By.XPATH, "//*[@id='controlled-select-financial-entity']").click() 
+item_1 = driver.find_element(By.XPATH, "//*[@id='menu-idEntity']/div[3]/ul/li[1]").click()
+
+tipo_tasa = driver.find_element(By.XPATH, "//*[@id='controlled-select-tnaTypeId']").click()
+item_2 = driver.find_element(By.XPATH,"//*[@id='menu-idTnaType']/div[3]/ul/li[2]").click()
+
+if(c12): driver.find_element(By.XPATH,"/html/body/div[7]/div[3]/div/div[2]/form/div/div[8]/div/label[1]/span[1]/span[1]/input").click()
+if(c24): driver.find_element(By.XPATH, "/html/body/div[7]/div[3]/div/div[2]/form/div/div[8]/div/label[2]/span[1]/span[1]/input").click()
+if(c36): driver.find_element(By.XPATH, "/html/body/div[7]/div[3]/div/div[2]/form/div/div[8]/div/label[3]/span[1]/span[1]/input").click()
+if(c48): driver.find_element(By.XPATH, "/html/body/div[7]/div[3]/div/div[2]/form/div/div[8]/div/label[4]/span[1]/span[1]/input").click()
+if(c60): driver.find_element(By.XPATH, "/html/body/div[7]/div[3]/div/div[2]/form/div/div[8]/div/label[5]/span[1]/span[1]/input").click()
+
+crearbtn = driver.find_element(By.XPATH, "/html/body/div[7]/div[3]/div/div[2]/form/div/div[9]/button[2]").click()
+
+time.sleep(5)
+
+buscar = driver.find_element(By.XPATH, "//*[@id='gatsby-focus-wrapper']/div/div/main/div[1]/div/div/div/div/div/div[1]/div[1]/div[3]/div/input")
+buscar.send_keys (nombreConvenio + Keys.ENTER)
+
+time.sleep(10)
+driver.close()

@@ -1,0 +1,35 @@
+
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.by import By
+from selenium import webdriver;
+from selenium.webdriver.common.keys import Keys;
+import time
+
+driver = webdriver.Chrome(executable_path="C:\drivers_selenium\chromedriver_win32\chromedriver.exe")
+driver.get("http://localhost:8000/clientes/")
+driver.maximize_window()
+time.sleep(2)
+
+click_1=driver.find_element(By.XPATH,"//*[@id='gatsby-focus-wrapper']/div/main/div[1]/div/div/div/div/div/div[1]/div[2]/button").click()
+
+dni= driver.find_element(By.XPATH,"//*[@id='gatsby-focus-wrapper']/div/main/div[1]/div/div/form/div[2]/div/div[1]/div/div/input")
+dni.send_keys("45588823")
+
+nombre= driver.find_element(By.XPATH,"//*[@id='gatsby-focus-wrapper']/div/main/div[1]/div/div/form/div[2]/div/div[2]/div/div/input")
+nombre.send_keys("El modelo")
+
+apellido= driver.find_element(By.XPATH,"//*[@id='gatsby-focus-wrapper']/div/main/div[1]/div/div/form/div[2]/div/div[3]/div/div/input")
+apellido.send_keys("El modelo")
+
+estado_civil_list = driver.find_element(By.XPATH,"//*[@id='gatsby-focus-wrapper']/div/main/div[1]/div/div/form/div[2]/div/div[4]/div/div").click()
+es_selecter = driver.find_element(By.XPATH,"//*[@id='menu-maritalStatus']/div[3]/ul/li[2]").click()
+
+direccion= driver.find_element(By.XPATH,"//*[@id='gatsby-focus-wrapper']/div/main/div[1]/div/div/form/div[2]/div/div[5]/div/div/input")
+direccion.send_keys("Humberto primero 3337")
+
+provicia = driver.find_element(By.XPATH,"//*[@id='gatsby-focus-wrapper']/div/main/div[1]/div/div/form/div[2]/div/div[6]/div/div/div").click()
+pv_selecter = driver.find_element(By.XPATH,"//*[@id='province-autocomplete']").click()
+
+#
+
+time.sleep(4000);

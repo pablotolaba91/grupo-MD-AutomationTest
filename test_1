@@ -1,0 +1,32 @@
+from time import time
+from selenium.webdriver.common.by import By
+from selenium import webdriver;
+from selenium.webdriver.common.keys import Keys;
+import time
+
+#Aprendo a usar selectores
+
+driver = webdriver.Chrome(executable_path="C:\drivers_selenium\chromedriver_win32\chromedriver.exe")
+
+driver.get("https://demoqa.com/text-box")
+driver.maximize_window()
+time.sleep(2)
+
+nom=driver.find_element("xpath","//input[contains(@id,'userName')]")
+nom.send_keys("Rodrigo")
+
+mail=driver.find_element("xpath","//*[@id='userEmail']")
+mail.send_keys("ptolaba@gmail.com")
+time.sleep(2)
+
+adress= driver.find_element("xpath","//*[@id='currentAddress']").send_keys("mi direccion")
+adress_2 = driver.find_element("xpath","//*[@id='permanentAddress']").send_keys("mi direccion2")
+
+driver.execute_script("window.scrollTo(0,500)")
+
+time.sleep(2)
+
+#Busco elemento por ID
+button= driver.find_element(By.ID,"submit").click()
+time.sleep(3)
+driver.close()
